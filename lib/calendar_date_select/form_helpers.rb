@@ -143,9 +143,14 @@ module CalendarDateSelect::FormHelpers
         end
       end
 
-    tag = ActionView::Helpers::InstanceTag.new_with_backwards_compatibility(object, method, self, options.delete(:object))
+		if javascript_options[:hidden] || javascript_options[:embedded]
+			tag = ActionView::Helpers::Tags::HiddenField.new(object, method, self, options)
+		else
+			tag = ActionView::Helpers::Tags::TextField.new(object, method, self, options)
+		end
+		
     calendar_date_select_output(
-      tag.to_input_field_tag( (javascript_options[:hidden] || javascript_options[:embedded]) ? "hidden" : "text", options),
+      tag.render,
       image,
       options,
       javascript_options
