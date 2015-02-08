@@ -7,6 +7,13 @@ require 'active_support'
 
 module CalendarDateSelect
 
+  # required to let Rails find all assets
+  module Rails
+    class Engine < ::Rails::Engine
+    end
+  end
+
+
   Files = [
     '/public',
     '/public/javascripts/calendar_date_select',
